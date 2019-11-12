@@ -1,0 +1,108 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>AlcoMarket</title>
+</head>
+<body>
+    <div>
+        <form asp-controller="Home" asp-action="Index">
+            <p>
+                <input type="text" name="SearchString">
+                <input type="submit" value="Search" />
+            </p>
+        </form>
+        <table cellpadding="7">
+            <tr>
+                <td><h2> Name </h2></td>
+                <td><h2> Category </h2></td>
+                <td><h2> Country </h2></td>
+                <td><h2> Size </h2></td>
+                <td><h2> Strenght </h2></td>
+                <td><h2> Price </h2></td>
+                <td><h2> NewPrice </h2></td>
+            </tr>
+            @foreach (var p in ViewBag.Products)
+            {
+        <tr>
+            <td><h3> @p.Name </h3></td>
+            <td><h3> @p.Category </h3></td>
+            <td><h3> @p.Country </h3></td>
+            <td><h3> @p.Size </h3></td>
+            <td><h3> @p.Strenght </h3></td>
+
+            @if (p.Discount != 0)
+            {
+                <td><h3><del>@p.Price</del> </h3></td>
+                <td><h3 class="product_price" style="color:cadetblue">@p.NewPrice</h3></td>
+            }
+            else
+            {
+                <td><h3>@p.Price </h3></td>
+                <td><h3> </h3></td>
+            }
+            <td>
+                <button class="btn btn-success" onclick="location.href='@Url.Action("Add", "Home", new { id = p.Id })'">Add To Bucket</button>
+            </td>
+            @if (User.Identity.IsAuthenticated)
+            {
+                if (User.IsInRole("admin"))
+                {
+                    <td>
+                        <button class="btn btn-warning" width="100px" onclick="location.href='@Url.Action("Edit", "Home", new { id = p.Id })'">Edit</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-warning" width="100px" onclick="location.href='@Url.Action("Delete", "Home", new { id = p.Id })'">Delete</button>
+                    </td>
+                    if (p.Discount == 0)
+                    {
+                        <td>
+                            <button class="btn btn-warning" width="100px" onclick="location.href='@Url.Action("AddDiscount", "Home", new { id = p.Id })'">Add discount</button>
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <button class="btn btn-danger" width="100px" onclick="location.href='@Url.Action("CancelDiscount", "Home", new { id = p.Id })'">Cancel discount</button>
+                        </td>
+                    }
+                }
+            }
+        </tr>
+            }
+        </table>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                @if (Model.pageInfo.PageNumber == 1)
+                {
+                    <li class="page-item"><a class="page-link" href=@string.Format("/Home/Index/?page={0}",Model.pageInfo.PageNumber)>Previous</a></li>
+
+                }
+                else
+                {
+
+                    <li class="page-item"><a class="page-link" href=@string.Format("/Home/Index/?page={0}",Model.pageInfo.PageNumber-1)>Previous</a></li>
+                }
+
+                @if (Model.pageInfo.PageNumber == Model.pageInfo.TotalPages)
+                {
+                    <li class="page-item"><a class="page-link" href=@string.Format("/Home/Index/?page={0}",Model.pageInfo.PageNumber)>Next</a></li>
+
+                }
+                else
+                {
+
+                    <li class="page-item"><a class="page-link" href=@string.Format("/Home/Index/?page={0}",Model.pageInfo.PageNumber+1)>Next</a></li>
+
+                }
+
+
+            </ul>
+        </nav>
+    </div>
+</body>
+</html>

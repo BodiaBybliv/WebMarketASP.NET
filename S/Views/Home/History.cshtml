@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "History";
+}
+
+<h1>Ваша історія:</h1>
+<table class="table table-hover">
+    @foreach (var order in Model)
+    {
+        <tr>
+            <td>
+                <h3>@order.DateTime</h3>
+            </td>
+            <td>
+                <h3>@order.PostAddress</h3>
+            </td>
+        </tr>
+    }
+</table>

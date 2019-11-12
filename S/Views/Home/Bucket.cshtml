@@ -1,0 +1,97 @@
+﻿
+@{
+    ViewBag.Title = "Bucket";
+}
+
+<!DOCTYPE html>
+@if (Model.Products.Count == 0)
+{
+    <h1>Корзина порожня</h1>
+}
+else
+{
+    <html>
+    <body>
+        <div>
+            <table>
+                <tr>
+                    <td><h3>Name</h3></td>
+                    <td><h3>Category</h3></td>
+                    <td><h3>Country</h3></td>
+                    <td><h3>Size</h3></td>
+                    <td><h3>Strenght</h3></td>
+                    <td><h3>Price</h3></td>
+                </tr>
+                @foreach (var p in Model.Products)
+                {
+                    <tr>
+                        <td><h3>@p.Name</h3></td>
+                        <td><h3>@p.Category</h3></td>
+                        <td><h3>@p.Country</h3></td>
+                        <td><h3>@p.Size</h3></td>
+                        <td><h3>@p.Strenght</h3></td>
+                        <td><h3>@p.Price</h3></td>
+                        @if (p.NewPrice != 0)
+                        {
+                            <td><h3 class="product_price" style="color:cadetblue">@p.NewPrice</h3></td>
+                        }
+                        else
+                        {
+                            <td><h3> </h3></td>
+                        }
+                        <td>
+                            <button class="btn btn-danger" onclick="location.href='@Url.Action("Cancel", "Home", new { id = p.Id })'">Скасувати</button>
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td><h3>Загальна вартість @Model.TotalPrice</h3></td>
+                </tr>
+                <tr>
+                    <td>
+                        <button class="btn btn-success" onclick="location.href='@Url.Action("Buy", "Home", new { id = Model.Id })'">Купити</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
+    </html>
+}
+
+
+
+
+@*<html>
+    <head>
+        <title>AlcoMarket</title>
+    </head>
+    <body>
+        <div>
+            <table>
+                <tr>
+                    <td><p>Name</p></td>
+                    <td><p>Category</p></td>
+                    <td><p>Country</p></td>
+                    <td><p>Size</p></td>
+                    <td><p>Strenght</p></td>
+                    <td><p>Price</p></td>
+                </tr>
+                @foreach (var p in ViewBag.Products)
+                {
+                    <tr>
+                        <td><p>@p.Name</p></td>
+                        <td><p>@p.Category</p></td>
+                        <td><p>@p.Country</p></td>
+                        <td><p>@p.Size</p></td>
+                        <td><p>@p.Strenght</p></td>
+                        <td><p>@p.Price</p></td>
+                    </tr>
+                }
+                <tr>
+                    <td><p><a href="/Home/Buy/@ViewBag.BucketId">Buy</a></p></td>
+                    <td><p>@ViewBag.TotalPrice</p></td>
+                </tr>
+            </table>
+        </div>
+    </body>
+    </html>*@

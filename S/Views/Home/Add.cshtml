@@ -1,0 +1,39 @@
+﻿@{
+    ViewBag.Title = "Add";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>AlcoMarket</title>
+</head>
+<body>
+    <div>
+        <table>
+            <tr>
+                <td><p>Name</p></td>
+                <td><p>Category</p></td>
+                <td><p>Country</p></td>
+                <td><p>Size</p></td>
+                <td><p>Strenght</p></td>
+                <td><p>Price</p></td>
+            </tr>
+            @foreach (var p in ViewBag.products)
+            {
+                <tr>
+                    <td><p>@p.Name</p></td>
+                    <td><p>@p.Category</p></td>
+                    <td><p>@p.Country</p></td>
+                    <td><p>@p.Size</p></td>
+                    <td><p>@p.Strenght</p></td>
+                    <td><p>@p.Price</p></td>
+                </tr>
+            }
+            <tr>
+                <td><p><a href="/Home/Buy/@ViewBag.BucketId">Buy</a></p></td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
